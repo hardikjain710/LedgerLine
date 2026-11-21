@@ -1,0 +1,14 @@
+target/
+.idea/
+*.iml
+.env
+.env.*
+.DS_Store
+
+AGENTS.md
+SPEC.md
+docs/RESUME_BULLETS.md
+
+AGENTS.md
+SPEC.md
+docs/RESUME_BULLETS.md

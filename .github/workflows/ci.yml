@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: Verify
+        run: ./mvnw -B verify
+      - name: Generate coverage report after an early build failure
+        if: failure()
+        run: |
+          if [ -s target/jacoco.exec ] && [ ! -f target/site/jacoco/index.html ]; then
+            ./mvnw -B jacoco:report@coverage-report
+          fi
+      - name: Upload JaCoCo report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
+          if-no-files-found: warn

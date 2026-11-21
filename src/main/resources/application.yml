@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: billing-platform
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/billing}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:pass}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  jackson:
+    mapper:
+      allow-coercion-of-scalars: false
+    deserialization:
+      accept-float-as-int: false
+
+billing:
+  processor: ${BILLING_PROCESSOR:simulated}
